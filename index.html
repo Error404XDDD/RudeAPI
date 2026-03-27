@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Docs | RudeAPI Public</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;800&display=swap');
+        
+        :root {
+            --bg: #0a0a0c;
+            --card: #141417;
+            --accent: #22c55e;
+            --text: #e2e8f0;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        .code-font { font-family: 'Fira Code', monospace; }
+
+        .sidebar {
+            background-color: var(--card);
+            border-right: 1px solid #27272a;
+        }
+
+        .endpoint-card {
+            background-color: var(--card);
+            border: 1px solid #27272a;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+
+        .endpoint-card:hover {
+            border-color: var(--accent);
+        }
+
+        .method-get {
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+        }
+
+        .api-console {
+            background-color: #000;
+            border-radius: 8px;
+            padding: 1.5rem;
+            color: #4ade80;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .privacy-badge {
+            background: linear-gradient(135deg, #166534 0%, #052e16 100%);
+        }
+
+        .lang-tab {
+            border-bottom: 2px solid transparent;
+        }
+        .lang-tab.active {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body class="flex flex-col md:flex-row min-h-screen">
+
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar w-full md:w-64 p-6 shrink-0 sticky top-0 md:h-screen overflow-y-auto z-50">
+        <div class="flex items-center gap-2 mb-10">
+            <div class="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-black font-black">R</div>
+            <span class="text-xl font-extrabold tracking-tighter">RudeAPI <span class="text-green-500">Docs</span></span>
+        </div>
+
+        <ul class="space-y-4 text-sm font-medium text-gray-400">
+            <li class="text-xs uppercase text-gray-600 font-bold tracking-widest mb-2">Introduction</li>
+            <li><a href="#welcome" class="hover:text-green-500 transition block">Getting Started</a></li>
+            <li><a href="#privacy" class="hover:text-green-500 transition block">Privacy Manifesto</a></li>
+            <li><a href="#code-samples" class="hover:text-green-500 transition block">Code Samples</a></li>
+            
+            <li class="text-xs uppercase text-gray-600 font-bold tracking-widest mt-8 mb-2">Endpoints</li>
+            <li><a href="#endpoint-password" class="hover:text-green-500 transition block">Password Gen</a></li>
+            <li><a href="#endpoint-id" class="hover:text-green-500 transition block">Hex ID Gen</a></li>
+            <li><a href="#endpoint-hash" class="hover:text-green-500 transition block">SHA256 Hasher</a></li>
+            <li><a href="#endpoint-chance" class="hover:text-green-500 transition block">Magic 8-Ball</a></li>
+
+            <li class="text-xs uppercase text-gray-600 font-bold tracking-widest mt-8 mb-2">Support</li>
+            <li><a href="#faq" class="hover:text-green-500 transition block">FAQ</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-1 p-6 md:p-12 lg:max-w-5xl overflow-x-hidden">
+        
+        <!-- Welcome Section -->
+        <section id="welcome" class="mb-20">
+            <h1 class="text-4xl md:text-5xl font-black mb-6 tracking-tight">Technical <span class="text-green-500">Overview</span></h1>
+            <p class="text-gray-400 text-lg leading-relaxed mb-8">
+                RudeAPI is a secure, anonymous middleware for developer utilities. No registration, no tracking, just pure data endpoints served via HTTPS. 
+                Built with <strong>Python 3.9+</strong> and <strong>FastAPI</strong>.
+            </p>
+            
+            <div id="privacy" class="privacy-badge p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between border border-green-500/30 gap-4">
+                <div class="flex items-center gap-4">
+                    <i class="fas fa-shield-halved text-3xl text-green-400 text-center w-10"></i>
+                    <div>
+                        <h4 class="font-bold">Privacy division active</h4>
+                        <p class="text-sm opacity-70 italic"> plenty and safe infrastructure </p>
+                    </div>
+                </div>
+                <div class="text-xs font-mono bg-black/30 px-3 py-1 rounded-full border border-white/10">ZERO_LOGS_ENABLED</div>
+            </div>
+        </section>
+
+        <!-- Base URL -->
+        <div class="mb-12 p-4 bg-zinc-900 border border-zinc-800 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3 overflow-hidden">
+                <span class="text-xs font-bold text-zinc-500 uppercase shrink-0">Base URL</span>
+                <code class="code-font text-green-500 text-sm truncate">https://rudeapi.onrender.com</code>
+            </div>
+            <button onclick="copyToClipboard('https://rudeapi.onrender.com')" class="text-zinc-500 hover:text-white transition flex items-center gap-2 text-sm shrink-0">
+                <i class="far fa-copy"></i> Copy URL
+            </button>
+        </div>
+
+        <!-- Endpoints Documentation -->
+        <section id="endpoints" class="space-y-12">
+            
+            <h2 class="text-2xl font-bold border-b border-zinc-900 pb-4">API Endpoints</h2>
+
+            <!-- Endpoint: Password -->
+            <div id="endpoint-password" class="endpoint-card p-6 rounded-xl">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="method-get px-3 py-1 rounded-md text-xs font-black uppercase">GET</span>
+                    <h3 class="text-xl font-bold code-font">/tools/password</h3>
+                </div>
+                <p class="text-gray-400 mb-6">Generates a secure random alphanumeric password. Perfect for user onboarding or temporary credentials.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-500 uppercase mb-3 tracking-widest">Parameters</h4>
+                        <table class="w-full text-sm">
+                            <tr class="border-b border-zinc-800">
+                                <td class="py-2 font-mono text-green-500">length</td>
+                                <td class="py-2 text-zinc-500 italic">Optional</td>
+                                <td class="py-2 text-right">8 to 64 (Default: 16)</td>
+                            </tr>
+                        </table>
+                        <button onclick="runTest('/tools/password?length=20')" class="mt-4 w-full bg-green-600/10 hover:bg-green-600/20 text-green-500 border border-green-500/20 py-2 rounded-lg text-sm font-bold transition">Try Endpoint</button>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-500 uppercase mb-3 tracking-widest">JSON Response</h4>
+                        <div class="api-console text-xs overflow-x-auto">
+{
+  "password": "x7P$kQ29!vLm5RzW8uT1",
+  "length": 20
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint: Hex ID -->
+            <div id="endpoint-id" class="endpoint-card p-6 rounded-xl">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="method-get px-3 py-1 rounded-md text-xs font-black uppercase">GET</span>
+                    <h3 class="text-xl font-bold code-font">/tools/id</h3>
+                </div>
+                <p class="text-gray-400 mb-6">Returns a globally unique 16-character hexadecimal identifier.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-500 uppercase mb-3 tracking-widest">Parameters</h4>
+                        <p class="text-sm text-zinc-500 italic">No parameters required.</p>
+                        <button onclick="runTest('/tools/id')" class="mt-4 w-full bg-green-600/10 hover:bg-green-600/20 text-green-500 border border-green-500/20 py-2 rounded-lg text-sm font-bold transition">Try Endpoint</button>
+                    </div>
+                    <div>
+                        <div class="api-console text-xs overflow-x-auto">
+{
+  "unique_id": "ID-AABBCCDDEEFF0011"
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint: SHA256 -->
+            <div id="endpoint-hash" class="endpoint-card p-6 rounded-xl">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="method-get px-3 py-1 rounded-md text-xs font-black uppercase">GET</span>
+                    <h3 class="text-xl font-bold code-font">/tools/hash</h3>
+                </div>
+                <p class="text-gray-400 mb-6">Converts a string into a SHA256 hash. Purely computational, no data is logged.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-500 uppercase mb-3 tracking-widest">Parameters</h4>
+                        <table class="w-full text-sm">
+                            <tr class="border-b border-zinc-800">
+                                <td class="py-2 font-mono text-green-500">text</td>
+                                <td class="py-2 text-zinc-500 italic font-bold">Required</td>
+                                <td class="py-2 text-right">Any UTF-8 string</td>
+                            </tr>
+                        </table>
+                        <button onclick="runTest('/tools/hash?text=GitHubDemo')" class="mt-4 w-full bg-green-600/10 hover:bg-green-600/20 text-green-500 border border-green-500/20 py-2 rounded-lg text-sm font-bold transition">Test SHA256</button>
+                    </div>
+                    <div>
+                        <div class="api-console text-xs h-full min-h-[120px] flex flex-col justify-center overflow-x-auto">
+                            <pre id="console-out" class="whitespace-pre-wrap text-green-500 font-mono">Select 'Test' to fetch live data...</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Endpoint: Magic 8-Ball -->
+            <div id="endpoint-chance" class="endpoint-card p-6 rounded-xl">
+                <div class="flex flex-wrap items-center gap-3 mb-4">
+                    <span class="method-get px-3 py-1 rounded-md text-xs font-black uppercase">GET</span>
+                    <h3 class="text-xl font-bold code-font">/tools/chance</h3>
+                </div>
+                <p class="text-gray-400 mb-6">A witty Magic 8-Ball service for making hard decisions with zero legal liability.</p>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div>
+                        <h4 class="text-xs font-bold text-zinc-500 uppercase mb-3 tracking-widest">Parameters</h4>
+                        <table class="w-full text-sm">
+                            <tr class="border-b border-zinc-800">
+                                <td class="py-2 font-mono text-green-500">question</td>
+                                <td class="py-2 text-zinc-500 italic font-bold">Required</td>
+                                <td class="py-2 text-right text-xs">A question string</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <div class="api-console text-xs overflow-x-auto">
+{
+  "question": "Will it work?",
+  "answer": "Maybe in another universe."
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Code Samples Section -->
+        <section id="code-samples" class="mt-20">
+            <h2 class="text-2xl font-bold mb-6 tracking-tight">Implementation <span class="text-green-500">Samples</span></h2>
+            <div class="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden">
+                <div class="flex bg-zinc-950 border-b border-zinc-800 px-4">
+                    <button class="px-4 py-3 text-xs font-bold lang-tab active">cURL</button>
+                    <button class="px-4 py-3 text-xs font-bold lang-tab">JavaScript</button>
+                    <button class="px-4 py-3 text-xs font-bold lang-tab">Python</button>
+                </div>
+                <div class="p-6">
+                    <pre class="code-font text-sm text-green-500 bg-black p-4 rounded overflow-x-auto">
+curl -X GET "https://rudeapi.onrender.com/tools/password?length=24"</pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="mt-20">
+            <h2 class="text-2xl font-bold mb-8">Frequently Asked Questions</h2>
+            <div class="space-y-6">
+                <div class="border-l-2 border-green-500 pl-4">
+                    <h4 class="font-bold mb-2">Is there an API key required?</h4>
+                    <p class="text-sm text-gray-500">No. RudeAPI is open and anonymous. We believe in unrestricted utility for developers.</p>
+                </div>
+                <div class="border-l-2 border-zinc-800 pl-4">
+                    <h4 class="font-bold mb-2">What is the rate limit?</h4>
+                    <p class="text-sm text-gray-500">We allow up to 120 requests per minute per origin. If you exceed this, you'll receive a 429 Error.</p>
+                </div>
+                <div class="border-l-2 border-zinc-800 pl-4">
+                    <h4 class="font-bold mb-2">Why "RudeAPI"?</h4>
+                    <p class="text-sm text-gray-500">Because it's direct, doesn't waste time with fluff, and gives you blunt answers in the Magic 8-ball tool.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="mt-24 pt-8 border-t border-zinc-900 text-zinc-600 text-sm flex flex-col md:flex-row justify-between gap-4 pb-12">
+            <p>&copy; 2023 Error404XDDD | Public Showcase Repo</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-white transition"><i class="fab fa-github"></i> Source</a>
+                <a href="#" class="hover:text-white transition"><i class="fas fa-envelope"></i> Contact</a>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const API_BASE = "https://rudeapi.onrender.com";
+
+        async function runTest(endpoint) {
+            const out = document.getElementById('console-out');
+            out.textContent = "// Connecting to API...\n// Please wait...";
+            
+            try {
+                const res = await fetch(API_BASE + endpoint);
+                const data = await res.json();
+                out.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                out.textContent = "// Error: Connection failed.\n// Make sure https://rudeapi.onrender.com is up.";
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            const btn = event.currentTarget;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+            setTimeout(() => btn.innerHTML = originalText, 2000);
+        }
+    </script>
+</body>
+</html>
+
+                  
