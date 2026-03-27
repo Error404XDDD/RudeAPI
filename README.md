@@ -1,5 +1,7 @@
 # 💀 RudeAPI Ultimate | Public Documentation 💀
 
+<img width="1408" height="768" alt="1774653672926" src="https://github.com/user-attachments/assets/cb4c9cfa-a8e1-4ae7-ac40-aaba00773e7d" />
+
 ![API Status](https://img.shields.io/website?down_color=red&down_message=offline&up_color=green&up_message=online&url=https%3A%2F%2Frudeapi.onrender.com%2F)
 ![Uptime](https://img.shields.io/badge/uptime-100%25-brightgreen)
 ![Privacy](https://img.shields.io/badge/privacy-Zero%20Logs-blueviolet)
